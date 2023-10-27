@@ -1,29 +1,28 @@
 <template>
-<base-dialog :show="!!error" title="An Error occurred" @close="handleError">
-      <p>{{ error }}</p>
-    </base-dialog>
-    <base-dialog :show="isLoading" title="Authenticating..." fixed>
-      <base-spinner></base-spinner>
-    </base-dialog>
+  <base-dialog :show="!!error" title="An Error occurred" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
+  <base-dialog :show="isLoading" title="Authenticating..." fixed>
+    <base-spinner></base-spinner>
+  </base-dialog>
   <form @submit.prevent="submitLogin">
-    <!-- <form method="get" name="form" action="../php/PostScript.php" > -->
     <div class="form-control" :class="{ invalid: !username.isValid }">
       <label for="username">Username</label>
       <input
-        type="text"
-        id="username"
-        v-model.trim="username.val"
-        @change="clearValidity('username')"
+          type="text"
+          id="username"
+          v-model.trim="username.val"
+          @change="clearValidity('username')"
       />
       <p v-if="!username.isValid">Username must not be empty.</p>
     </div>
     <div class="form-control" :class="{ invalid: !password.isValid }">
       <label for="password">Password</label>
       <input
-        type="text"
-        id="password"
-        v-model.trim="password.val"
-        @change="clearValidity('password')"
+          type="text"
+          id="password"
+          v-model.trim="password.val"
+          @change="clearValidity('password')"
       />
       <p v-if="!password.isValid">Password must not be empty.</p>
     </div>
@@ -51,7 +50,7 @@ export default {
         isValid: true,
       },
       formIsValid: true,
-      mode: 'login',
+      //mode: 'login',
       isLoading: false,
       error: null,
     };
@@ -76,9 +75,7 @@ export default {
       }
     },
     submitLogin() {
-      //const bcrypt = require('bcryptjs');
       this.validateForm();
-      
       if (!this.formIsValid) {
         return;
       }
@@ -94,31 +91,26 @@ export default {
       data.append("password", this.password.val);
       data.append("action", "login" );
       axios
-        .post("http://localhost/owc_project/src/api/Actions.php", data)
-        .then(res => {
-         //console.log(bcrypt.hash(this.password.val, 10));
-          //console.log(bcrypt.hashSync(), '\n\n');
-          //console.log(bcrypt.compareSync(bcrypt.hashSync(this.password.val, 10), res.data.pw), '\n\n');
-          // console.log(res.data);
-          // console.log(this.username.val);
-          // console.log(this.password.val);
-          if (res.data.username === this.username.val && bcrypt.compareSync( this.password.val,  res.data.pw) ){ 
-               setTimeout(() => {
-                 this.isLoading = false;
-                 //TODO save role
-                 this.$router.replace('/'); }, 500);
-          }else{
-            throw new Error('Invalid username or Password!');
-          }
-        })
-        .catch(() => {
-          setTimeout(() => {  
-            this.error = "Wrong 'username' or 'password' was entered!";
-            this.isLoading = false;
-          }, 1000);
-          this.username.val='';
-          this.password.val='';
-        });
+          .post("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", data)
+          .then(res => {
+            console.log(res)
+            if (res.data.username === this.username.val && bcrypt.compareSync( this.password.val,  res.data.pw) ){
+              setTimeout(() => {
+                this.isLoading = false;
+                //TODO save role
+                this.$router.replace('/'); }, 500);
+            }else{
+              throw new Error('Invalid username or Password!');
+            }
+          })
+          .catch(() => {
+            setTimeout(() => {
+              this.error = "Wrong 'username' or 'password' was entered!";
+              this.isLoading = false;
+            }, 1000);
+            this.username.val='';
+            this.password.val='';
+          });
     },
     handleError() {
       this.error = null;

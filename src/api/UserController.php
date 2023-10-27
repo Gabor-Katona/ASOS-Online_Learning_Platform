@@ -18,13 +18,12 @@ class UserController{
     public function login($username){
         $query_data = array(
             ':username' =>  $username,
-            
-           );
+        );
         $stmt = $this->conn->prepare("SELECT * FROM `login` where username = :username");
         $stmt->execute($query_data);
         $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
-        $personCheck = $stmt->fetch();
-        return $personCheck; 
+        $person = $stmt->fetch();
+        return $person;
     }
     public function registration(User $person){
         $query_data = array(
@@ -32,16 +31,25 @@ class UserController{
             ':lastname' =>  $person->getLastname(),
             ':username' =>  $person->getUsername(),
             ':email' =>  $person->getEmail(),
-            ':password' =>  $person->getPassword(),
+            ':pw' =>  $person->getPassword(),
             ':role' =>  $person->getRole(),
-           );
+        );
         $stmt = $this->conn->prepare(
             "INSERT INTO `login` (firstname, lastname, username, email, pw, role)
              values (:firstname, :lastname, :username, :email, :pw, :role)");
         $stmt->execute($query_data);
     }
 
-
+    public function checkIfUsernameExists(string $username):bool {
+        $stmt = $this->conn->prepare("SELECT username from `login` where username = :username;");
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->execute();
+        if($stmt->fetch(PDO::FETCH_COLUMN)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     // public function insertUser(User $person): int
     // {

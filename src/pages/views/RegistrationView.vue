@@ -15,11 +15,11 @@ export default {
     RegistrationForm,
   },
   methods: {
-    saveData(data) {
-    // this.$store.dispatch('coaches/registerCoach', data);
-    console.log('Cathed emit: REGISTER!', data);
-    this.$router.replace('/');
-    // alert('Saved data to DB ..... hahahaha not yet!!!');
+    saveData() {
+      // this.$store.dispatch('coaches/registerCoach', data);
+      //console.log('Catched emit: REGISTER!', data);
+      //this.$router.replace('/');
+      // alert('Saved data to DB ..... hahahaha not yet!!!');
     }
   }
 };
