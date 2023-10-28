@@ -53,7 +53,6 @@
           id="password1"
           v-model.trim="password1.val"
           @input="passwordMatch()"
-
       />
       <p v-if="!password1.isValid">{{ pw1Error }}.</p>
     </div>
@@ -64,8 +63,6 @@
           id="password2"
           v-model.trim="password2.val"
           @input="passwordMatch()"
-
-
       />
       <p v-if="!password2.isValid">{{ pw2Error }}</p>
     </div>
@@ -167,10 +164,8 @@ export default {
         if(this.password1.val.length < 8 ){
           if(this.password1.val === ""){
             this.pw1Error = 'Password must not be empty';
-
           }else{
             this.pw1Error = 'Password is too short!';
-
           }
           this.password1.isValid = false;
         }
@@ -181,10 +176,9 @@ export default {
         if(this.password2.val.length < 8 ){
           if(this.password2.val === ""){
             this.pw2Error = 'Password must not be empty';
-
-          }else{
+          }
+          else{
             this.pw2Error = 'Password is too short!';
-
           }
           this.password2.isValid = false;
         }
@@ -284,7 +278,7 @@ export default {
       data.append("action", "register" );
 
       axios
-          .post("http://localhost/owc_project/src/api/Actions.php", data)
+          .post("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", data)
           .then(res => {
             if (res.data === true){
               setTimeout(() => {

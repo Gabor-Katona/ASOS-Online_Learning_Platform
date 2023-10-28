@@ -34,7 +34,7 @@
 
 <script>
 import axios from "axios";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 export default {
   //name: 'login',
@@ -58,7 +58,7 @@ export default {
   methods: {
     clearValidity(input) {
       this[input].isValid = true;
-      if(this.username.isValid && this.password.isValid){
+      if (this.username.isValid && this.password.isValid) {
         this.formIsValid = true;
       }
     },
@@ -89,18 +89,39 @@ export default {
       const data = new FormData();
       data.append("username", this.username.val);
       data.append("password", this.password.val);
-      data.append("action", "login" );
+      data.append("action", "login");
       axios
           .post("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", data)
-          .then(res => {
-            console.log(res)
-            if (res.data.username === this.username.val && bcrypt.compareSync( this.password.val,  res.data.pw) ){
+          .then((res) => {
+            if (
+                res.data.username === this.username.val &&
+                bcrypt.compareSync(this.password.val, res.data.pw)
+            ) {
               setTimeout(() => {
                 this.isLoading = false;
                 //TODO save role
-                this.$router.replace('/'); }, 500);
-            }else{
-              throw new Error('Invalid username or Password!');
+                const expiresIn = 10800000; // 3h - autologout timer 7000 = 7s
+                const expirationDate = new Date().getTime() + expiresIn;
+
+                localStorage.setItem('userId', res.data.username);
+                localStorage.setItem('role', res.data.role);
+                localStorage.setItem('tokenExpiration', expirationDate);
+
+                this.$store.commit("setUser", {
+                  userId: res.data.username,
+                  userRole: res.data.role,
+                  isLoggedIn: true
+                });
+
+                console.log(
+                    this.$store.getters.userId,
+                    "<=>",
+                    this.$store.getters.userRole
+                );
+                this.$router.replace("/");
+              }, 500);
+            } else {
+              throw new Error("Invalid username or Password!");
             }
           })
           .catch(() => {
@@ -108,8 +129,8 @@ export default {
               this.error = "Wrong 'username' or 'password' was entered!";
               this.isLoading = false;
             }, 1000);
-            this.username.val='';
-            this.password.val='';
+            this.username.val = "";
+            this.password.val = "";
           });
     },
     handleError() {

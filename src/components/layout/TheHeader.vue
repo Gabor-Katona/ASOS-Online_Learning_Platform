@@ -5,25 +5,36 @@
         <router-link to="/">Home</router-link>
       </h1>
 
-       <h1>
-           <router-link to="topics">Topics</router-link>
-       </h1>
-        
-      
+      <div class="dropdown">
+        <h1 >
+          <!-- <router-link to="topics">Topics</router-link> -->
+          Topics
+        </h1>
+        <div class="dropdown-content">
+          <router-link to="/course1">Test course 1</router-link>
+          <router-link to="/course1">Test course 2</router-link>
+        </div>
+      </div>
+
       <h1>
         <router-link to="/about">About</router-link>
       </h1>
-
+      <h1 v-if="activeRole === 'teacher' || activeRole === 'admin'">
+        <router-link to="/createtest">New Test</router-link>
+      </h1>
+      <h1 v-if="activeRole === 'admin'">
+        <router-link to="/adminpanel">Admin Panel</router-link>
+      </h1>
       <ul>
-        <li>
+        <li v-if="!isLoggedIn">
           <router-link to="/login">Login</router-link>
         </li>
-        <li>
+        <li v-if="!isLoggedIn">
           <router-link to="/register">Sign In</router-link>
         </li>
-        <!-- <li>
+        <li v-else>
           <base-button @click="logout">Logout</base-button>
-        </li> -->
+        </li>
       </ul>
     </nav>
   </header>
@@ -32,15 +43,18 @@
 <script>
 export default {
   computed: {
-    // isLoggedIn() {
-    //   return this.$store.getters.isAuthenticated;
-    // }
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+    activeRole() {
+      return this.$store.getters.userRole;
+    },
   },
   methods: {
-    // logout() {
-    //   this.$store.dispatch('logout');
-    //   this.$router.replace('/coaches');
-    // }
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.replace("/");
+    },
   },
 };
 </script>
@@ -61,18 +75,21 @@ header a {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
+  /* border-radius: 10px solid transparent; */
 }
 
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #000000;
+   border: 1px solid #000000;
+  /*border-radius: 10px solid #000000;*/
 }
 
-h1 {
+/* h1 {
   margin: 0;
-}
+} */
 
+h1,
 h1 a {
   color: white;
   margin: 0;
@@ -85,7 +102,8 @@ h1 a.router-link-active {
 }
 
 header nav {
-  width: 90%;
+  /* width: 90%; */
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: space-between;
@@ -104,4 +122,47 @@ header ul {
 li {
   margin: 0 0.5rem;
 }
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  float: none;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  margin-left: -40px;
+  border-radius: 10px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #3a0061;
+  color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+/* .dropdown:hover .dropbtn {background-color: #3e8e41;} */
 </style>
