@@ -2,25 +2,25 @@
   <header>
     <nav>
       <h1>
-        <router-link to="/">Home</router-link>
+        <router-link to="/">Domov</router-link>
       </h1>
 
       <div class="dropdown">
         <h1 >
           <!-- <router-link to="topics">Topics</router-link> -->
-          Topics
+          Témy
         </h1>
         <div class="dropdown-content">
           <router-link to="/course1">Test course 1</router-link>
-          <router-link to="/course1">Test course 2</router-link>
+          <router-link to="/course2">Test course 2</router-link>
         </div>
       </div>
 
       <h1>
-        <router-link to="/about">About</router-link>
+        <router-link to="/about">O nás</router-link>
       </h1>
       <h1 v-if="activeRole === 'teacher' || activeRole === 'admin'">
-        <router-link to="/createtest">New Test</router-link>
+        <router-link to="/createtest">Nový test</router-link>
       </h1>
       <h1 v-if="activeRole === 'admin'">
         <router-link to="/adminpanel">Admin Panel</router-link>
@@ -33,7 +33,7 @@
           <router-link to="/register">Sign In</router-link>
         </li>
         <li v-else>
-          <base-button @click="logout">Logout</base-button>
+          <base-button @click="logout" class="flat">Logout</base-button>
         </li>
       </ul>
     </nav>
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("autoLogout");
       this.$router.replace("/");
     },
   },
@@ -81,7 +81,8 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-   border: 1px solid #000000;
+  border: 1px solid #000000;
+  border-radius: 10px;
   /*border-radius: 10px solid #000000;*/
 }
 
