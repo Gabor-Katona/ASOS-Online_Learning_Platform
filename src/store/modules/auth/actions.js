@@ -20,7 +20,7 @@ export default { //dispatch
     let responseUserId = null;
 
     await axios
-        .post("http://localhost/owc_project/src/api/Actions.php", data)
+        .post("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", data)
         .then((res) => {
           responseUserId = res.data.username;
         })
