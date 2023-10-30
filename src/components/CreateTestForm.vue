@@ -10,32 +10,34 @@
       <p>3.Krok: vyplňte formulár, a všade označte správnu odpoveď!</p>
       <p>4.Krok: odoslať formulár</p>
       <label for="title">Titul testu</label>
-      <input type="text" id="title" v-model="title"/><br/><br/>
+      <input type="text" id="title" name="title" v-model="title" /><br /><br />
       <label for="courses">Vyberte tému testu</label>
       <select name="courses" id="courses" v-model="course">
         <option disabled value="">Témy</option>
-        <option value="course1">Course 1</option>
-        <option value="course2">Course 2</option>
-      </select>
-      <br/>
-      <br/>
+        <option value="vlc">VLC</option>
+        <option value="occ">OCC</option>
+        <option value="irc">IRC</option>
+        <option value="fso">FSO</option>
+        <option value="uvc">UVC</option>
+        <option value="lifi">LI-FI</option></select
+      ><br /><br />
     </base-card>
     <base-card>
       <div class="form-control">
         <label for="q1">1. Otázka</label>
-        <textarea id="q1" v-model="q1.q" rows="4"></textarea>
+        <textarea id="q1" name="q1" v-model="q1.q" rows="4"></textarea>
       </div>
       <div class="form-control">
         <label for="q1a1">Odpoveď A</label>
-        <input type="text" id="q1a1" v-model="q1.a1"/>
+        <input type="text" id="q1a1" name="q1a1" v-model="q1.a1" />
       </div>
       <div class="form-control">
         <label for="q1a2">Odpoveď B</label>
-        <input type="text" id="q1a2" v-model="q1.a2"/>
+        <input type="text" id="q1a2" name="q1a2" v-model="q1.a2" />
       </div>
       <div class="form-control">
         <label for="q1a3">Odpoveď C</label>
-        <input type="text" id="q1a3" v-model="q1.a3"/>
+        <input type="text" id="q1a3" name="q1a3" v-model="q1.a3" />
       </div>
       <div class="form-control">
         <p>Vyberte správnu odpoveď!</p>
@@ -43,7 +45,7 @@
         <input
             type="radio"
             id="q1gA"
-            name="good ans 1"
+            name="good_ans_1"
             value="a1"
             v-model="q1.goodA"
         />
@@ -52,7 +54,7 @@
         <input
             type="radio"
             id="q1gB"
-            name="good ans 1"
+            name="good_ans_1"
             value="a2"
             v-model="q1.goodA"
         />
@@ -61,7 +63,7 @@
         <input
             type="radio"
             id="q1gC"
-            name="good ans 1"
+            name="good_ans_1"
             value="a3"
             v-model="q1.goodA"
         />
@@ -88,16 +90,16 @@ export default {
         goodA: "", //good answer for q1
         isValid: true,
       },
-    
-    q2:[
+
+      q2:[
         {text: 'q', val: 'question2'},
         {text: 'a1', val: 'A'},
         {text: 'a2', val: 'B'},
         {text: 'a3', val: 'C'},
         {text: 'goodA', val: 'B'},
         {text: 'isValid', val: true},
-    ],
-    
+      ],
+
 
       formIsValid: false,
       isLoading: false,
@@ -105,7 +107,7 @@ export default {
     };
   },
   methods: {
-      
+
     validate() {
       if (this.title === "" || this.course === "") {
         this.formIsValid = false;
@@ -113,11 +115,11 @@ export default {
       } else {
         // title && course true
         if (
-          this.q1.q === "" ||
-          this.q1.a1 === "" ||
-          this.q1.a2 === "" ||
-          this.q1.a3 === "" ||
-          this.q1.goodA === ""
+            this.q1.q === "" ||
+            this.q1.a1 === "" ||
+            this.q1.a2 === "" ||
+            this.q1.a3 === "" ||
+            this.q1.goodA === ""
         ) {
           this.q1.isValid = false;
           this.formIsValid = false;
@@ -135,15 +137,17 @@ export default {
       if (!this.formIsValid) {
         return;
       }
-      
+
+
+
       console.log(this.title);
-      console.log(this.course);
+      console.log(this.courses);
       console.log(this.q1.q);
       console.log(this.q1.a1);
       console.log(this.q1.a2);
       console.log(this.q1.a3);
       console.log(this.q1.goodA);
-   
+
     },
   },
 };
@@ -168,7 +172,7 @@ input[type="checkbox"] + label {
 
 input,
 textarea {
-  display: flexbox;
+  display: inline-flex;
   width: 15rem;
   border: 1px solid #ccc;
   font: inherit;
