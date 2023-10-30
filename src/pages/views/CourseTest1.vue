@@ -31,11 +31,12 @@
 </template>
 
 <script>
-import BaseCard from "../../components/ui/BaseCard.vue";
-import BaseButton from "../../components/ui/BaseButton.vue";
+import "../../css/TopicPageLayout.css";
 
 export default {
-  components: {BaseButton, BaseCard},
+  data() {
+    return {};
+  },
   methods: {
     moveUp() {
       window.scrollTo(0, 0);
@@ -45,17 +46,5 @@ export default {
 </script>
 
 <style scoped>
-h4 {
-  margin-left: 15px;
-  text-align: left;
-}
-p {
-  margin-left: 15px;
-  margin-right: 15px;
-  text-align: left;
-}
-ul li {
-  margin-left: 1rem;
-  text-align: justify;
-}
+
 </style>
