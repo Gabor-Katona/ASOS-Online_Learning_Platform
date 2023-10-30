@@ -2,10 +2,12 @@
 header("content-type: application/json");
 require_once "User.php";
 require_once "UserController.php";
+require_once "TestController.php";
 
 $userController = new UserController();
+$testController = new TestController();
 
-if($_POST['action'] == 'login'){    
+if($_POST['action'] == 'login'){
     // $stmt = $conn->prepare("SELECT username, pw, role FROM `login` where username = :username and pw = :password");
     // $stmt->execute($query_data);
     // while($row = $stmt->fetch(PDO::FETCH_ASSOC))
@@ -47,7 +49,15 @@ if($_POST['action'] == 'register'){
             echo json_encode($exception->getMessage());
         }
     }
+}
 
+if($_POST['action'] == 'new_test'){
+    try{
+        $testController-> addNewTest($_POST);
+        echo json_encode("Test was Successfully uploaded to Database!");
+    }catch(PDOException $exception){
+        echo json_encode($exception->getMessage());
+    }
 }
 
 ?>
