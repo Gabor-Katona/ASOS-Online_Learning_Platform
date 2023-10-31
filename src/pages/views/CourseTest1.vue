@@ -15,14 +15,17 @@
     <base-card>
       <section>
         <h2>Testy</h2>
-        <ul>
-          <li>test 1</li>
-          <li>test 2</li>
-          <li>test 3</li>
-          <li>test 4</li>
-          <li>test 5</li>
-          <li>test 6</li>
+        <ul v-if="testTitles">
+          <test-item
+              v-for="test in displayTestTitlesForThisCourse"
+              :key="test.id"
+              :id="test.id"
+              :title="test.title"
+              :course="test.course"
+          ></test-item>
+          <!-- <li>{{displayTestTitlesForThisCourse}}</li> -->
         </ul>
+        <h3 v-else>No Tests found.</h3>
       </section>
       <br /><br />
       <base-button @click="moveUp">Späť na začiatok</base-button>
@@ -32,19 +35,54 @@
 
 <script>
 import "../../css/TopicPageLayout.css";
+import TestItem from '../../components/TestItem.vue';
 
 export default {
+  components:{
+    TestItem
+  },
   data() {
-    return {};
+    return {
+      titles:[],
+    };
+  },
+  computed: {
+    testTitles(){
+      console.log('HASTESTS: ',this.$store.getters['test/hasTests']);
+      return this.$store.getters['test/hasTests'];
+    },
   },
   methods: {
     moveUp() {
       window.scrollTo(0, 0);
     },
+    async displayTestTitlesForThisCourse() {
+      const actionPayload = new FormData();
+      actionPayload.append("action", "getTestTitles");
+      actionPayload.append("course", "vlc");
+
+      try {
+        await this.$store.dispatch("test/displayTestsInTopics", actionPayload);
+        const tests = await this.$store.getters["test/getTests"];
+
+
+
+        tests.forEach((test) => {
+          console.log(test.id);
+          console.log(test.title);
+          console.log(test.course);
+
+        });
+
+        return tests;
+      } catch (error) {
+        console.log("ERROR: ", error);
+      }
+    },
+
+  },
+  created() {
+    this.displayTestTitlesForThisCourse();
   },
 };
 </script>
-
-<style scoped>
-
-</style>

@@ -15,8 +15,8 @@ class UserController{
         $this->conn = (new Database())->getConnection();
     }
 
-    public function login($username, string $role, string $password){
-        if($username && $role === '' && $password === ''){
+    public function login($username, string $role, string $token){
+        if($username && $role === '' && $token === ''){
             $query_data = array(
                 ':username' =>  $username,
             );
@@ -24,16 +24,15 @@ class UserController{
         }else{ // autologin
             $query_data = array(
                 ':role' => $role,
-                ':pw' =>  $password,
+                ':token' =>  $token,
             );
-            $stmt = $this->conn->prepare("SELECT * FROM `login` where pw = :pw and role = :role");
+            $stmt = $this->conn->prepare("SELECT * FROM `login` where token = :token and role = :role");
         }
         $stmt->execute($query_data);
         $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
         $person = $stmt->fetch();
         return $person;
     }
-
     public function registration(User $person){
         $query_data = array(
             ':firstname' =>  $person->getFirstname(),
@@ -42,23 +41,47 @@ class UserController{
             ':email' =>  $person->getEmail(),
             ':pw' =>  $person->getPassword(),
             ':role' =>  $person->getRole(),
+            ':token' => sha1(time()),
         );
         $stmt = $this->conn->prepare(
-            "INSERT INTO `login` (firstname, lastname, username, email, pw, role)
-             values (:firstname, :lastname, :username, :email, :pw, :role)");
+            "INSERT INTO `login` (firstname, lastname, username, email, pw, role, token)
+             values (:firstname, :lastname, :username, :email, :pw, :role, :token)");
         $stmt->execute($query_data);
     }
 
-    public function checkIfUsernameExists(string $username):bool {
+    public function checkIfUsernameOrEmailExists(string $username, string $email):string {
         $stmt = $this->conn->prepare("SELECT username from `login` where username = :username;");
         $stmt->bindParam(":username", $username, PDO::PARAM_STR);
         $stmt->execute();
-        if($stmt->fetch(PDO::FETCH_COLUMN)){
-            return true;
-        }else{
-            return false;
+        $usernameExists = $stmt->fetch(PDO::FETCH_COLUMN);
+        $stmt = $this->conn->prepare("SELECT email from `login` where email = :email;");
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $emailexists = $stmt->fetch(PDO::FETCH_COLUMN);
+        if($usernameExists && $emailexists){
+            return 'username and email exists';
+        }
+        else if($usernameExists && !$emailexists){
+            return 'username exists';
+        }
+        else if(!$usernameExists && $emailexists){
+            return 'email exists';
+        }
+        else{
+            return 'none of them exists';
         }
     }
+    // public function checkIfEmailExists(string $email):bool {
+    //     $stmt = $this->conn->prepare("SELECT email from `login` where email = :email;");
+    //     $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+    //     $stmt->execute();
+    //     if($stmt->fetch(PDO::FETCH_COLUMN)){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
+
 
     // public function insertUser(User $person): int
     // {
@@ -79,32 +102,6 @@ class UserController{
     //     return $this->conn->lastInsertId();
     // }
 
-    // public function checkIfUserExists(string $username, string $password,string $method):bool {
-    //     $stmt = $this->conn->prepare("select user.* from user where user.username=:username;");
-    //     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    //     $stmt->execute();
-    //     $stmt->setFetchMode(PDO::FETCH_CLASS, "User");
-    //     $personCheck = $stmt->fetch();
-    //     switch ($method){
-    //         case "login":
-    //             if ($personCheck->getUsername() === $username && password_verify($password, $personCheck->getPassword())) {
-    //                 return true;
-    //             }else{
-    //                 return false;
-    //             }
-    //         case "registration":
-    //             if(!$personCheck){
-    //                 return false;
-    //             }else {
-    //                 if ($personCheck->getUsername() === $username) {
-    //                     return true;
-    //                 } else {
-    //                     return false;
-    //                 }
-    //             }
-    //     }
-
-    // }
     // public function getUserEmail($username):string{
     //     $stmt = $this->conn->prepare("select user.email from user where user.username=:username;");
     //     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
@@ -113,6 +110,7 @@ class UserController{
     //     $tmp_email = $stmt->fetch();
     //     return $tmp_email[0];
     // }
+
     // public function logUser($username, $email, $logintype):void{
     //     $stmt = $this->conn->prepare("insert into login (username, email, logintype, logintime) values (:username, :email, :logintype, :logintime);");
     //     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
@@ -122,20 +120,6 @@ class UserController{
     //     $logintime = date("d-m-Y h:i:s a", time());
     //     $stmt->bindParam(":logintime", $logintime, PDO::PARAM_STR);
     //     $stmt->execute();
-    // }
-
-    // public function getAllMyLogins ($username): array
-    // {
-    //     $stmt = $this->conn->prepare("select * from login where login.username=:username;");
-    //     $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_CLASS, "Login");
-    // }
-    // public function getSumOfLoginTypes($type){
-    //     $stmt = $this->conn->prepare("select count(login.logintype) from login where login.logintype=:logintype;");
-    //     $stmt->bindParam(":logintype", $type, PDO::PARAM_STR);
-    //     $stmt->execute();
-    //     return $stmt->fetch();
     // }
 
 }
