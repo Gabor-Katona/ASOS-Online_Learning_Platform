@@ -16,18 +16,17 @@
       <section>
         <h2>Testy</h2>
         <ul v-if="testTitles">
-          <test-item
-              v-for="test in displayTestTitlesForThisCourse"
+          <test-title
+              v-for="test in titles"
               :key="test.id"
               :id="test.id"
               :title="test.title"
               :course="test.course"
-          ></test-item>
-          <!-- <li>{{displayTestTitlesForThisCourse}}</li> -->
+          ></test-title>
         </ul>
         <h3 v-else>No Tests found.</h3>
       </section>
-      <br /><br />
+      <br/><br/>
       <base-button @click="moveUp">Späť na začiatok</base-button>
     </base-card>
   </section>
@@ -35,20 +34,19 @@
 
 <script>
 import "../../css/TopicPageLayout.css";
-import TestItem from '../../components/TestItem.vue';
+import TestTitle from '../../components/TestTitle.vue';
 
 export default {
-  components:{
-    TestItem
+  components: {
+    TestTitle
   },
   data() {
     return {
-      titles:[],
+      titles: [],
     };
   },
   computed: {
-    testTitles(){
-      console.log('HASTESTS: ',this.$store.getters['test/hasTests']);
+    testTitles() {
       return this.$store.getters['test/hasTests'];
     },
   },
@@ -60,21 +58,12 @@ export default {
       const actionPayload = new FormData();
       actionPayload.append("action", "getTestTitles");
       actionPayload.append("course", "vlc");
-
       try {
-        await this.$store.dispatch("test/displayTestsInTopics", actionPayload);
+        await this.$store.dispatch("test/displayTestTitlesInTopics", actionPayload);
         const tests = await this.$store.getters["test/getTests"];
-
-
-
-        tests.forEach((test) => {
-          console.log(test.id);
-          console.log(test.title);
-          console.log(test.course);
-
-        });
-
-        return tests;
+        for (let test of tests) {
+          this.titles.push({['id']: test.id, ['title']: test.title, ['course']: test.course});
+        }
       } catch (error) {
         console.log("ERROR: ", error);
       }

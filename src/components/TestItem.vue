@@ -14,9 +14,9 @@ export default {
     },
   },
   mounted:{
-      foo(){
-          console.log("TEST ITEM COMP",this.id, this.title,  this.course);
-      }
+    foo(){
+      console.log("TEST ITEM COMP",this.id, this.title,  this.course);
+    }
   },
 };
 </script>

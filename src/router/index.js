@@ -8,6 +8,8 @@ import CreateTestView from "../pages/views/CreateTestView.vue";
 import AdminPanelView from "../pages/views/AdminPanelView.vue";
 import CourseTest1 from "../pages/views/CourseTest1.vue";
 import CourseTest2 from "../pages/views/CourseTest2.vue";
+import TestPage from "../pages/TestPage.vue";
+import TestForm from '../components/TestForm.vue';
 
 import store from "../store/index.js";
 
@@ -22,12 +24,18 @@ const router = createRouter({
     { path: "/login", name: "login", component: LoginView },
     { path: "/register", name: "register", component: RegistrationView },
     {
+      path: "/test/:course",
+      component: TestPage,
+      props: true,
+      children: [
+        { path: ':id/:title', component: TestForm, props: true } // /test/course/id
+      ]
+    },
+    {
       path: "/createtest",
       name: "createtest",
       component: CreateTestView,
-      meta: { requiresAuth: true,
-        requiresTeacher: true
-      },
+      meta: { requiresAuth: true, requiresTeacher: true },
     },
     {
       path: "/adminpanel",
@@ -57,28 +65,33 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   let role = store.getters.userRole;
-  let localRole = localStorage.getItem('role');
+  let localRole = localStorage.getItem("role");
 
   if (to.meta.requiresAuth) {
     if (!role && !localRole) {
       //console.log('router NO ROLE');
-      router.replace('/login');
+      router.replace("/login");
     } else {
       if (to.meta.requiresAdmin) {
-        if (role === "admin" || localRole === 'admin') {
+        if (role === "admin" || localRole === "admin") {
           //console.log('router req admin ');
           return next();
         } else {
           //console.log('router req admin ELSE');
-          router.replace('/login');
+          router.replace("/login");
         }
       }
       if (to.meta.requiresTeacher) {
-        if (role === "teacher" || localRole === 'teacher' || role === 'admin' || localRole === 'admin') {
+        if (
+            role === "teacher" ||
+            localRole === "teacher" ||
+            role === "admin" ||
+            localRole === "admin"
+        ) {
           //console.log('router req admin || teacher ');
           return next();
         } else {
-          console.log('router req admin || teacher ELSE');
+          console.log("router req admin || teacher ELSE");
           //router.replace('/login');
         }
       }
