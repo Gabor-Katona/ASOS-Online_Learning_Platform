@@ -57,9 +57,9 @@ export default {
     async displayTestTitlesForThisCourse() {
       const actionPayload = new FormData();
       actionPayload.append("action", "getTestTitles");
-      actionPayload.append("course", "vlc");
+      actionPayload.append("course", "course1");
       try {
-        await this.$store.dispatch("test/displayTestTitlesInTopics", actionPayload);
+        await this.$store.dispatch("test/displayTestsInTopics", actionPayload);
         const tests = await this.$store.getters["test/getTests"];
         for (let test of tests) {
           this.titles.push({['id']: test.id, ['title']: test.title, ['course']: test.course});
