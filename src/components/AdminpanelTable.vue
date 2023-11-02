@@ -3,23 +3,22 @@
     <h2>Users</h2>
     <table class="table">
       <thead>
-        <th>Username
-        </th>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Actions</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Actions</th>
       </thead>
       <tbody>
-        <tr v-for="user in posts" :key="user.id">
-          <td data-label="Username">{{ user.username }}</td>
-          <td data-label="Email">{{ user.email }}</td>
-          <td data-label="Role">{{ user.role }}</td>
-          <td>
-            <base-button class="delete" @click="deleteUser(user.id)"
-              >Delete</base-button
-            >
-          </td>
-        </tr>
+      <tr v-for="user in posts" :key="user.id">
+        <td data-label="Username">{{ user.username }}</td>
+        <td data-label="Email">{{ user.email }}</td>
+        <td data-label="Role">{{ user.role }}</td>
+        <td>
+          <base-button class="delete" @click="deleteUser(user.id)"
+          >Delete</base-button
+          >
+        </td>
+      </tr>
       </tbody>
     </table>
     <base-button @click="show">Show all users</base-button>
@@ -30,11 +29,12 @@
 
 
 export default {
-
-
   props: ["posts"],
   data() {
-    return {};
+    return {
+
+
+    };
   },
   methods: {
     show() {
@@ -53,7 +53,6 @@ export default {
 </script>
 
 <style scoped>
-
 :root {
   --fs-400: 1rem;
   --fs-300: 0.7rem;
