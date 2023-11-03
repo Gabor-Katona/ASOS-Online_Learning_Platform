@@ -14,14 +14,23 @@ export default{
         }
     },
 
-    async displayTestsInTopics(context, payload){
+    async fetchTests(context, payload){
         const res = await fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
             method: 'POST',
             body: payload,
         });
+        if (!res.ok) {
+            throw new Error("Something went wrong the test initialization, try again!");
+        }
         const responseData = await res.json();
-        //console.log(responseData);
-
         context.commit('setTest', responseData);
+    },
+
+    deleteTest(context, payload){
+        fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
+            method: 'POST',
+            body: payload,
+        });
+        context.commit('deleteTest',payload.get('id'));
     },
 };

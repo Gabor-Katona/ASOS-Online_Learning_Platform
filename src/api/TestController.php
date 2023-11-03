@@ -62,7 +62,7 @@ class TestController{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getCompleteTestByParams(string $id, string $course, string $title){
+    public function getCompleteTestByParams(string $id){
         $queryArr = array(
             ':id' => $id,
         );
@@ -70,6 +70,20 @@ class TestController{
                 WHERE t.id = :id;");
         $stmt->execute($queryArr);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllTests(){
+        $stmt = $this->conn->prepare("SELECT * from `tests`;");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteTest(int $id){
+        $queryArr = array(
+            ':id' => $id,
+        );
+        $stmt = $this->conn->prepare("DELETE FROM `tests` WHERE id = :id;");
+        $stmt->execute($queryArr);
     }
 
 

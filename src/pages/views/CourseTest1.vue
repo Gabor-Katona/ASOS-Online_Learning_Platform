@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error" title="Error occured!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <base-card>
       <h1>Test Course 1</h1>
@@ -37,17 +40,21 @@ import "../../css/TopicPageLayout.css";
 import TestTitle from '../../components/TestTitle.vue';
 
 export default {
-  components: {
+  components:{
     TestTitle
   },
   data() {
     return {
-      titles: [],
+      titles:[],
+      error: null,
     };
   },
   computed: {
-    testTitles() {
+    testTitles(){
       return this.$store.getters['test/hasTests'];
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
   },
   methods: {
@@ -57,18 +64,20 @@ export default {
     async displayTestTitlesForThisCourse() {
       const actionPayload = new FormData();
       actionPayload.append("action", "getTestTitles");
-      actionPayload.append("course", "course1");
+      actionPayload.append("course", "vlc");
       try {
-        await this.$store.dispatch("test/displayTestsInTopics", actionPayload);
-        const tests = await this.$store.getters["test/getTests"];
-        for (let test of tests) {
-          this.titles.push({['id']: test.id, ['title']: test.title, ['course']: test.course});
-        }
+        await this.$store.dispatch("test/fetchTests", actionPayload);
+        this.titles = await this.$store.getters["test/getTests"];
+        // for(let test of tests){
+        //   this.titles.push({['id']: test.id, ['title']: test.title, ['course']: test.course});
+        // }
       } catch (error) {
-        console.log("ERROR: ", error);
+        this.error = error;
       }
     },
-
+    handleError() {
+      this.error = null;
+    },
   },
   created() {
     this.displayTestTitlesForThisCourse();

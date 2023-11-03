@@ -10,14 +10,18 @@
   "dependencies": {
     "@formkit/themes": "^1.2.2",
     "@formkit/vue": "^1.2.2",
+    "@mdi/font": "5.9.55",
     "axios": "^1.6.0",
     "bcryptjs": "^2.4.3",
     "core-js": "^3.8.3",
     "jquery": "^3.7.1",
+    "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.2.5",
-    "vuex": "^4.1.0"
+    "vuetify": "npm:@vuetify/nightly@next",
+    "vuex": "^4.1.0",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
