@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar">
-      <div class="brand-title">OLP app</div>
+      <div class="brand-title">Owc app</div>
       <a href="" class="toggle-button" @click.prevent="toggle">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -161,6 +161,13 @@ export default {
     display: flex;
   }
 
+  .dropdown-content{
+    width: 160px;
+    margin-left: -50px;
+  }
+  .dropdown-content .link{
+    font-size: .8rem;
+  }
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -182,14 +189,15 @@ export default {
   display: none;
   position: absolute;
   background-color: #333235;
-  min-width: 160px;
+  width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  margin-left: -50px;
+  margin-left: -70px;
   border-radius: 10px;
 }
 .dropdown-content .link {
   font-size: 1rem;
+  padding: 12px 16px;
 }
 .logout{
   align-self: center;
