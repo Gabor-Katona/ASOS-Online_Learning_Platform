@@ -86,5 +86,12 @@ class TestController{
         $stmt->execute($queryArr);
     }
 
+    public function getTestTitlesByUsername(string $username){
+        $stmt = $this->conn->prepare("SELECT * from `tests` where username = :username;");
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
 }

@@ -42,7 +42,7 @@ export default {
     }, expiresIn);
   },
 
-  autoLogin(context) {
+  async autoLogin(context) {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
     const tokenExpiration = localStorage.getItem("tokenExpiration");
@@ -70,8 +70,7 @@ export default {
               userRole: role,
               isLoggedIn: true,
             });
-          }
-          else{
+          } else {
             context.dispatch("autoLogout");
           }
         })
@@ -102,6 +101,7 @@ export default {
 
   async userRegistration(_, payload) {
     payload.set("password", bcrypt.hashSync(payload.get("password"), 10));
+    console.log("BEFORE POST ");
     const res = await fetch(
         "http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php",
         {
@@ -109,7 +109,10 @@ export default {
           body: payload,
         }
     );
+    console.log("AFTER POST ");
     const responseData = await res.json();
+    console.log("RES: ", responseData);
+
     if (!res.ok) {
       throw new Error("Stala sa nejaká chyba, skúste znova!");
     }

@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav class="navbar">
-      <div class="brand-title">Owc app</div>
+      <div class="brand-title">OLP app</div>
       <a href="" class="toggle-button" @click.prevent="toggle">
         <span class="bar"></span>
         <span class="bar"></span>
@@ -24,8 +24,11 @@
           <li>
             <router-link to="/about">O nás</router-link>
           </li>
+          <li v-if="isLoggedIn">
+            <router-link to="">Student panel</router-link>
+          </li>
           <li v-if="activeRole === 'teacher' || activeRole === 'admin'">
-            <router-link to="/createtest">Nový test</router-link>
+            <router-link to="/createtest">Teacher Panel</router-link>
           </li>
           <li v-if="activeRole === 'admin'">
             <router-link to="/adminpanel">Admin Panel</router-link>
