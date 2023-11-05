@@ -9,7 +9,8 @@ import AdminPanelView from "../pages/views/AdminPanelView.vue";
 import CourseTest1 from "../pages/views/CourseTest1.vue";
 import CourseTest2 from "../pages/views/CourseTest2.vue";
 import TestPage from "../pages/TestPage.vue";
-import TestForm from '../components/TestForm.vue';
+import TestForm from "../components/TestForm.vue";
+import StudentPanelView from "../pages/views/StudentPanelView.vue";
 
 import store from "../store/index.js";
 
@@ -30,6 +31,12 @@ const router = createRouter({
       children: [
         { path: ':id/:title', component: TestForm, props: true } // /test/course/id
       ]
+    },
+    {
+      path: "/student",
+      name: "student",
+      component: StudentPanelView,
+      meta: { requiresAuth: true, requiresStudent: true },
     },
     {
       path: "/createtest",
@@ -91,8 +98,22 @@ router.beforeEach((to, _, next) => {
           //console.log('router req admin || teacher ');
           return next();
         } else {
-          console.log("router req admin || teacher ELSE");
-          //router.replace('/login');
+          //console.log("router req admin || teacher ELSE");
+          router.replace('/login');
+        }
+      }
+      if (to.meta.requiresStudent) {
+        if (
+            role === "student" ||
+            localRole === "student" ||
+            role === "admin" ||
+            localRole === "admin"
+        ) {
+          //console.log('router req admin || teacher ');
+          return next();
+        } else {
+          //console.log("router req admin || teacher ELSE");
+          router.replace('/login');
         }
       }
     }

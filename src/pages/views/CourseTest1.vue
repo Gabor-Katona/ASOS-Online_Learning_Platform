@@ -2,7 +2,7 @@
   <base-dialog :show="!!error" title="Error occured!" @close="handleError">
     <p>{{ error }}</p>
   </base-dialog>
-  <section>
+  <section class="view">
     <base-card>
       <h1>Test Course 1</h1>
       <h3>text</h3>
@@ -15,7 +15,7 @@
       </section>
     </base-card>
 
-    <base-card>
+    <base-card v-if="isLoggedIn">
       <section>
         <h2>Testy</h2>
         <ul v-if="testTitles">
@@ -29,29 +29,28 @@
         </ul>
         <h3 v-else>No Tests found.</h3>
       </section>
-      <br/><br/>
+      <br /><br />
       <base-button @click="moveUp">Späť na začiatok</base-button>
     </base-card>
   </section>
 </template>
 
 <script>
-import "../../css/TopicPageLayout.css";
-import TestTitle from '../../components/TestTitle.vue';
+import TestTitle from "../../components/TestTitle.vue";
 
 export default {
-  components:{
-    TestTitle
+  components: {
+    TestTitle,
   },
   data() {
     return {
-      titles:[],
+      titles: [],
       error: null,
     };
   },
   computed: {
-    testTitles(){
-      return this.$store.getters['test/hasTests'];
+    testTitles() {
+      return this.$store.getters["test/hasTests"];
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;

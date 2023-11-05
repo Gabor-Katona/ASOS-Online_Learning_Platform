@@ -1,54 +1,88 @@
-h4 {
-    margin-left: 15px;
+
+.view h1, h2, h3{
+    padding-top: 1rem;
+}
+.view h2{
+    padding-bottom: 2rem;
+}
+.view h4{
+    margin-left: 2rem;
+    padding-bottom: 1rem;
     text-align: left;
 }
-p {
-    margin-left: 15px;
-    margin-right: 15px;
+.view h5{
+    margin-left: 2rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
     text-align: left;
 }
-ul li {
-    margin-left: 20px;
-    margin-right: 20px;
-    text-align: justify;
+.view p {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    text-align: left;
+    padding-bottom: .5rem;
 }
-img {
+.view ul li {
+    margin-left: 3rem;
+    margin-right: 1.5rem;
+    padding-bottom: .5rem;
+    text-align: left;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+/* .view span{
+  padding-top: 4rem;
+} */
+.view img {
+    padding-top: 1rem;
     max-width: 450px;
     max-height: 300px;
     width: auto;
     height: auto;
 }
-iframe{
+.view iframe{
     width: 560px;
     height: 320px;
+    padding-bottom: .5rem;
 }
 
-.imgTitle{
+.view .imgTitle{
     text-align: center;
     font-size: .9rem;
+    padding-top: .2rem;
+    padding-bottom: 1rem;
 }
 
 @media (max-width: 700px) {
-    img {
+    .view img {
         margin-left: 15px;
         margin-right: 15px;
         max-width: 300px;
         max-height: 200px;
     }
-    iframe{
+    .view iframe{
         width: 315px;
         height: 210px;
     }
+    .view ul li {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
 }
 @media (max-width: 350px) {
-    img {
+    .view img {
         margin-left: 15px;
         margin-right: 15px;
         max-width: 210px;
         max-height: 175px;
     }
-    iframe{
+    .view iframe{
         width: 210px;
         height: 175px;
+    }
+    .view ul li {
+        margin-left: 1rem;
+        margin-right: .5rem;
     }
 }
