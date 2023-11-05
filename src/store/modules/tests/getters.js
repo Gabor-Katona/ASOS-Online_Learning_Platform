@@ -5,4 +5,8 @@ export default{
     hasTests(state){
         return state.test.length > 0;
     },
+    getCompleteTest(state){
+        return state.completeTest;
+    },
+
 };
