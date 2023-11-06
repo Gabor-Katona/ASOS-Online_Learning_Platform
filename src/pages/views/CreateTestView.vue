@@ -98,7 +98,6 @@ export default {
         testsPayload.append("action", "getTestsByUsername");
         await this.$store.dispatch("test/fetchTests", testsPayload);
         this.tests = await this.$store.getters["test/getTests"];
-        console.log(this.tests);
       }
       catch (error) {
         this.error = error;
