@@ -1,10 +1,11 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
+import { url } from '../../../js/url.js';
 let timer;
 
 export default {
   async login(context, payload) {
-    let url = "http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php";
+
     const res = await fetch(url, {
       method: "POST",
       body: payload,
@@ -58,7 +59,7 @@ export default {
     data.append("action", "autologin");
 
     axios
-        .post("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", data)
+        .post(url, data)
         .then((res) => {
           timer = setTimeout(() => {
             context.dispatch("autoLogout");
@@ -106,9 +107,7 @@ export default {
     // console.log(payload.get('oldEmail'));
     // console.log(payload.get('email'));
     // console.log(payload.get('//////////'));
-    const res = await fetch(
-        "http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php",
-        {
+    const res = await fetch(url, {
           method: "POST",
           body: payload,
         }

@@ -1,6 +1,8 @@
+import { url } from '../../../js/url.js';
+
 export default{
     async createNewTest(_, payload){
-        const res = await fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
+        const res = await fetch(url, {
             method: 'POST',
             body: payload,
         });
@@ -15,7 +17,7 @@ export default{
     },
 
     async fetchTests(context, payload){
-        const res = await fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
+        const res = await fetch(url, {
             method: 'POST',
             body: payload,
         });
@@ -27,7 +29,7 @@ export default{
     },
 
     deleteTest(context, payload){
-        fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
+        fetch(url, {
             method: 'POST',
             body: payload,
         });
@@ -35,7 +37,7 @@ export default{
     },
 
     async fetchCompleteTest(context, payload){
-        const res = await fetch("http://localhost/ASOS-Online_Learning_Platform/src/api/Actions.php", {
+        const res = await fetch(url, {
             method: 'POST',
             body: payload,
         });
