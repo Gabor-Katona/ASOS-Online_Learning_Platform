@@ -92,38 +92,38 @@
         required: 'Neoznačili ste rolu!',
       }"
     />
+    <!-- <FormKit
+    v-else-if="teacher == 'teacher'"
+    type="radio"
+    name="role"
+    v-model="role"
+    label="Sign In as:"
+    help="Vyberte ako sa chcete zaregistrovať"
+    :options="{
+      teacher: 'Učiteľ',
+    }"
+    validation="required"
+    :validation-messages="{
+      required: 'Neoznačili ste rolu!',
+    }"
+  />
     <FormKit
-        v-else-if="teacher == 'teacher'"
-        type="radio"
-        name="role"
-        v-model="role"
-        label="Sign In as:"
-        help="Vyberte ako sa chcete zaregistrovať"
-        :options="{
-        teacher: 'Učiteľ',
-      }"
-        validation="required"
-        :validation-messages="{
-        required: 'Neoznačili ste rolu!',
-      }"
-    />
+    v-else-if="student == 'student'"
+    type="radio"
+    name="role"
+    v-model="role"
+    label="Sign In as:"
+    help="Vyberte ako sa chcete zaregistrovať"
+    :options="{
+      student: 'Študent',
+    }"
+    validation="required"
+    :validation-messages="{
+      required: 'Neoznačili ste rolu!',
+    }"
+  /> -->
     <FormKit
-        v-else-if="student == 'student'"
-        type="radio"
-        name="role"
-        v-model="role"
-        label="Sign In as:"
-        help="Vyberte ako sa chcete zaregistrovať"
-        :options="{
-        student: 'Študent',
-      }"
-        validation="required"
-        :validation-messages="{
-        required: 'Neoznačili ste rolu!',
-      }"
-    />
-    <FormKit
-        v-else
+        v-if="!isLoggedIn"
         type="radio"
         name="role"
         v-model="role"
@@ -167,6 +167,11 @@ export default {
       password1: null,
       role: [],
     };
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
   },
   methods: {
     saveRegistrationForm() {
