@@ -8,5 +8,7 @@ export default{
     getCompleteTest(state){
         return state.completeTest;
     },
-
+    getResults(state){
+        return state.results;
+    },
 };

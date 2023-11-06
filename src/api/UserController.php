@@ -79,6 +79,13 @@ class UserController{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getUserByUsername(string $username){
+        $stmt = $this->conn->prepare("SELECT * from `login` WHERE username = :username;");
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function deleteUser(int $id){
         $queryArr = array(
             ':id' => $id,
