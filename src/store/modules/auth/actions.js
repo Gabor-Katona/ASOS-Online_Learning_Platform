@@ -1,13 +1,13 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { url } from '../../../js/url.js';
+
 let timer;
 
 export default {
   async login(context, payload) {
-
     const res = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       body: payload,
     });
     const responseData = await res.json();
@@ -100,21 +100,15 @@ export default {
     context.commit("setAutoLogout");
   },
 
-  async userRegistration(_, payload) {
+  async userRegistration(context, payload) {
     payload.set("password", bcrypt.hashSync(payload.get("password"), 10));
-    // console.log(payload.get('oldUsername'));
-    // console.log(payload.get('username'));
-    // console.log(payload.get('oldEmail'));
-    // console.log(payload.get('email'));
-    // console.log(payload.get('//////////'));
-    const res = await fetch(url, {
+    const res = await fetch(url,{
           method: "POST",
           body: payload,
         }
     );
 
     const responseData = await res.json();
-    // console.log("RES: ", responseData);
 
     if (!res.ok) {
       throw new Error("Stala sa nejaká chyba, skúste znova!");
@@ -124,16 +118,21 @@ export default {
           //"Entered 'Username' and 'Email' already exists, please choose another!"
           "Zadané 'Používateľské meno' a 'Email' sú obsadené!"
       );
-    } else if (responseData === "username exists") {
+    }
+    else if (responseData === "username exists") {
       throw new Error(
           // "Entered 'Username' already exists, please choose another!"
           "Zadané 'Používateľské meno' je obsadené!"
       );
-    } else if (responseData === "email exists") {
+    }
+    else if (responseData === "email exists") {
       throw new Error(
           // "Entered 'Email' already exists, please choose another!"
           "Zadaný 'Email' je obsadený!"
       );
+    }
+    else{
+      context.commit('adminpanel/updateUser', payload);
     }
   },
 };
