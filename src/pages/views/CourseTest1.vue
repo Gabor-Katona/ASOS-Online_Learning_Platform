@@ -63,7 +63,7 @@ export default {
     async displayTestTitlesForThisCourse() {
       const actionPayload = new FormData();
       actionPayload.append("action", "getTestTitles");
-      actionPayload.append("course", "vlc");
+      actionPayload.append("course", "course1");
       try {
         await this.$store.dispatch("test/fetchTests", actionPayload);
         this.titles = await this.$store.getters["test/getTests"];
