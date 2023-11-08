@@ -54,37 +54,18 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, _, next) => {
-//   if(to.meta.requiresAuth && !store.getters.isTeacher && !store.getters.isAdmin){ //store.getters.getUserRole
-//     next('/login');
-//   }
-//   else if(to.meta.requiresAuth && to.meta.requiresAdmin && store.getters.isAdmin){
-//     next();
-//   }
-//   else if(to.meta.requiresAuth && store.getters.isTeacher){
-//     next();
-//   }
-//   else {
-//     next();
-//   }
-
-// });
-
 router.beforeEach((to, _, next) => {
   let role = store.getters.userRole;
   let localRole = localStorage.getItem("role");
 
   if (to.meta.requiresAuth) {
     if (!role && !localRole) {
-      //console.log('router NO ROLE');
       router.replace("/login");
     } else {
       if (to.meta.requiresAdmin) {
         if (role === "admin" || localRole === "admin") {
-          //console.log('router req admin ');
           return next();
         } else {
-          //console.log('router req admin ELSE');
           router.replace("/login");
         }
       }
@@ -95,10 +76,8 @@ router.beforeEach((to, _, next) => {
             role === "admin" ||
             localRole === "admin"
         ) {
-          //console.log('router req admin || teacher ');
           return next();
         } else {
-          //console.log("router req admin || teacher ELSE");
           router.replace('/login');
         }
       }
@@ -109,10 +88,8 @@ router.beforeEach((to, _, next) => {
             role === "admin" ||
             localRole === "admin"
         ) {
-          //console.log('router req admin || teacher ');
           return next();
         } else {
-          //console.log("router req admin || teacher ELSE");
           router.replace('/login');
         }
       }

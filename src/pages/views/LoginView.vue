@@ -14,15 +14,14 @@
 </template>
 
 <script>
-
-import LoginFormkit from '../../components/LoginFormkit.vue';
+import LoginFormkit from "../../components/LoginFormkit.vue";
 
 export default {
   components: {
     LoginFormkit,
   },
-  data(){
-    return{
+  data() {
+    return {
       isLoading: false,
       error: null,
     };
@@ -39,7 +38,7 @@ export default {
       } catch (err) {
         setTimeout(() => {
           this.isLoading = false;
-          this.error = err;//"Wrong 'username' or 'password' was entered!";
+          this.error = err;
         }, 800);
       }
     },

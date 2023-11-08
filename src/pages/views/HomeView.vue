@@ -2,19 +2,11 @@
   <section>
     <base-card>
       <h1>Learning Management System</h1>
-      <h3>in progress...</h3>
       <p>
         <span>{{ time }}</span>
       </p>
       <section>
-        <v-carousel
-            hide-delimiters
-            height="400"
-            show-arrows="hover"
-            cycle
-            dark
-
-        >
+        <v-carousel hide-delimiters height="400" show-arrows="hover" cycle dark>
           <template v-slot:prev="{ props }">
             <v-btn
                 rounded="pill"
@@ -78,7 +70,7 @@ export default {
     checkTime(i) {
       if (i < 10) {
         i = "0" + i;
-      } // add zero in front of numbers < 10
+      }
       return i;
     },
   },
