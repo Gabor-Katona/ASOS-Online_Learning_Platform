@@ -13,9 +13,7 @@
                 size="small"
                 variant="outlined"
                 @click="props.onClick"
-            >
-              Prev
-            </v-btn>
+            >Prev</v-btn>
           </template>
           <template v-slot:next="{ props }">
             <v-btn
@@ -23,10 +21,13 @@
                 size="small"
                 variant="outlined"
                 @click="props.onClick"
-            >Next</v-btn
-            >
+            >Next</v-btn>
           </template>
-          <v-carousel-item v-for="(slide, i) in slides" :key="i">
+          <v-carousel-item
+              v-for="(slide, i) in slides"
+              :key="i"
+              @click="transfer(routes[i])"
+          >
             <v-sheet :color="'red lighten-1'" height="100%">
               <div class="d-flex fill-height justify-center align-center">
                 <div class="text-h2">{{ slide }}</div>
@@ -52,6 +53,7 @@ export default {
         "deep-purple accent-4",
       ],
       slides: ["Course 1", "Course 2", "Free course"],
+      routes: ["/course1", "/course2", "/course1"],
     };
   },
   methods: {
@@ -73,7 +75,12 @@ export default {
       }
       return i;
     },
+    transfer(route) {
+      window.scrollTo(0, 0);
+      this.$router.push(route);
+    },
   },
+
   created() {
     this.startTime();
   },

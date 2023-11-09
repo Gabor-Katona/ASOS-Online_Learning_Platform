@@ -1,13 +1,14 @@
 <template>
-  <base-dialog :show="!!error" title="An Error occurred" @close="handleError">
+  <base-dialog :show="!!error" title="Chyba!" @close="handleError">
     <p>{{ error }}</p>
   </base-dialog>
-  <base-dialog :show="isLoading" title="Authenticating..." fixed>
+  <base-dialog :show="isLoading" title="Overenie údajov..." fixed>
     <base-spinner></base-spinner>
   </base-dialog>
   <section>
     <base-card>
-      <h2>Login now!</h2>
+      <h2>Prihlásenie!</h2>
+      <br />
       <login-formkit @save-login="saveLogin"></login-formkit>
     </base-card>
   </section>

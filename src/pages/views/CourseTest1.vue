@@ -1,11 +1,10 @@
 <template>
-  <base-dialog :show="!!error" title="Error occured!" @close="handleError">
+  <base-dialog :show="!!error" title="Chyba!" @close="handleError">
     <p>{{ error }}</p>
   </base-dialog>
   <section class="view">
     <base-card>
       <h1>Test Course 1</h1>
-      <h3>text</h3>
       <section>
         <br /><br />
         <h4>Úvod</h4>

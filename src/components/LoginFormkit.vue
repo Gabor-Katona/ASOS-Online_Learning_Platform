@@ -1,34 +1,34 @@
 <template>
   <FormKit
-    type="form"
-    @submit="submitLogin"
-    :actions="false"
-    incomplete-message="Log In formulár nie je korektne vyplnený!"
+      type="form"
+      @submit="submitLogin"
+      :actions="false"
+      incomplete-message="Log In formulár nie je korektne vyplnený!"
   >
     <FormKit
-      type="email"
-      name="email"
-      v-model="email"
-      label="Email"
-      help="Zadajte emailovú adresu"
-      validation="required|*email"
-      :validation-messages="{
+        type="email"
+        name="email"
+        v-model="email"
+        label="Email"
+        help="Zadajte emailovú adresu"
+        validation="required|*email"
+        :validation-messages="{
         required: 'Nezadali ste emailovú adresu!',
         email: 'Nesprávny formát emailovej adresy!',
       }"
     />
     <FormKit
-      type="password"
-      name="password"
-      v-model="password"
-      label="Password"
-      validation="required"
-      help="Zadajte heslo"
-      :validation-messages="{
+        type="password"
+        name="password"
+        v-model="password"
+        label="Heslo"
+        validation="required"
+        help="Zadajte heslo"
+        :validation-messages="{
         required: 'Nezadali ste heslo!',
       }"
     />
-    <base-button>Log In</base-button>
+    <base-button>Prihlásiť sa</base-button>
   </FormKit>
 </template>
 
