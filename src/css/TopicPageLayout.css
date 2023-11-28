@@ -94,3 +94,13 @@
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }
+
+.formkit-wrapper{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.formkit-fieldset{
+    margin-left: auto;
+    margin-right: auto;
+}
