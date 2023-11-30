@@ -48,6 +48,10 @@
         <base-button @click="toggleNewTest">{{
             openNewTest ? "Zatvoriť nový test" : "Nový test"
           }}</base-button>
+        <br /><br />
+        <base-button @click="toggleNewCourse">{{
+            openNewCourse ? "Zatvoriť nový kurz" : "Nový kurz"
+          }}</base-button>
         <br />
       </base-card>
       <base-button @click="toggleEditDeatails">{{
@@ -59,6 +63,12 @@
     <base-card v-if="openNewTest">
       <h2>Vytvorte nový test</h2>
       <create-test-form @save-test="saveTest"></create-test-form>
+    </base-card>
+  </section>
+  <section>
+    <base-card v-if="openNewCourse">
+      <h2>Vytvorte nový kurz</h2>
+      <create-course-form @save-test="saveTest"></create-course-form>
     </base-card>
   </section>
   <section>
@@ -78,6 +88,7 @@
 
 <script>
 import CreateTestForm from "../../components/CreateTestForm.vue";
+import CreateCourseForm from "@/components/CreateCourseForm";
 import TestsTable from "../../components/TestsTable.vue";
 import RegistrationFormkit from "../../components/RegistrationFormkit.vue";
 import ResultsTable from "../../components/ResultsTable.vue";
@@ -85,6 +96,7 @@ import ResultsTable from "../../components/ResultsTable.vue";
 export default {
   components: {
     CreateTestForm,
+    CreateCourseForm,
     TestsTable,
     RegistrationFormkit,
     ResultsTable,
@@ -100,6 +112,7 @@ export default {
       isLoading: false,
       error: null,
       openNewTest: false,
+      openNewCourse: false,
       personalDetails: false,
       editTestOverlay: false,
     };
@@ -152,6 +165,24 @@ export default {
         }, 600);
       }
     },
+    /*async saveCourse(data) {
+      //TODO: Create functionality
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("test/createNewTest", data);
+        this.tests = await this.$store.getters["test/getTests"];
+        setTimeout(() => {
+          this.moveUp();
+          this.openNewTest = false;
+          this.isLoading = false;
+        }, 600);
+      } catch (err) {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.error = err;
+        }, 600);
+      }
+    },*/
     deleteTest(id) {
       const payload = new FormData();
       payload.append("id", id);
@@ -171,6 +202,9 @@ export default {
     },
     toggleNewTest() {
       this.openNewTest = !this.openNewTest;
+    },
+    toggleNewCourse() {
+      this.openNewCourse = !this.openNewCourse;
     },
     toggleEditDeatails() {
       this.personalDetails = !this.personalDetails;
