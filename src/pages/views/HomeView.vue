@@ -26,11 +26,13 @@
           <v-carousel-item
               v-for="(slide, i) in slides"
               :key="i"
+              :src="items[i].src"
               @click="transfer(routes[i])"
+              cover
           >
-            <v-sheet :color="'red lighten-1'" height="100%">
+            <v-sheet height="15%">
               <div class="d-flex fill-height justify-center align-center">
-                <div class="text-h2">{{ slide }}</div>
+                <div class="text-h6">{{ slide }}</div>
               </div>
             </v-sheet>
           </v-carousel-item>
@@ -45,6 +47,14 @@ export default {
   data() {
     return {
       time: null,
+      items: [
+        {
+          src: 'https://pc.sk/sites/default/files/images/li_fi.jpg',
+        },
+        {
+          src: 'https://pjzk94an.s5.cdn-upgates.com/q/q5f735661a079f-elektromagneticke-zareni-spektrum.jpg',
+        },
+      ],
       colors: [
         "grey",
         "warning",
@@ -52,8 +62,8 @@ export default {
         "red lighten-1",
         "deep-purple accent-4",
       ],
-      slides: ["Course 1", "Course 2", "Free course"],
-      routes: ["/course1", "/course2", "/course1"],
+      slides: ["Li-Fi", "Viditeľná sveteľná komunikácia"],
+      routes: ["/lifi", "/vlc"],
     };
   },
   methods: {

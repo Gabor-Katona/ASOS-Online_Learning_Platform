@@ -165,24 +165,6 @@ export default {
         }, 600);
       }
     },
-    /*async saveCourse(data) {
-      //TODO: Create functionality
-      this.isLoading = true;
-      try {
-        await this.$store.dispatch("test/createNewTest", data);
-        this.tests = await this.$store.getters["test/getTests"];
-        setTimeout(() => {
-          this.moveUp();
-          this.openNewTest = false;
-          this.isLoading = false;
-        }, 600);
-      } catch (err) {
-        setTimeout(() => {
-          this.isLoading = false;
-          this.error = err;
-        }, 600);
-      }
-    },*/
     deleteTest(id) {
       const payload = new FormData();
       payload.append("id", id);

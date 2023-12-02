@@ -6,11 +6,14 @@ import LoginView from "../pages/views/LoginView.vue";
 import NotFound from "../pages/NotFound.vue";
 import CreateTestView from "../pages/views/CreateTestView.vue";
 import AdminPanelView from "../pages/views/AdminPanelView.vue";
-import CourseTest1 from "../pages/views/CourseTest1.vue";
-import CourseTest2 from "../pages/views/CourseTest2.vue";
+//import CourseTest1 from "../pages/views/CourseTest1.vue";
+//import CourseTest2 from "../pages/views/CourseTest2.vue";
 import TestPage from "../pages/TestPage.vue";
 import TestForm from "../components/TestForm.vue";
 import StudentPanelView from "../pages/views/StudentPanelView.vue";
+import VlcView from "../pages/views/VlcView.vue";
+import LifiView from "../pages/views/LifiView.vue";
+
 
 import store from "../store/index.js";
 
@@ -19,8 +22,10 @@ const router = createRouter({
   routes: [
     { path: "/", name: "home", component: HomeView },
     //{ path: '', name: '', component: }, //topics
-    { path: '/course1', name: 'course1', component: CourseTest1 },
-    { path: '/course2', name: 'course2', component: CourseTest2 },
+    { path: "/lifi", name: "lifi", component: LifiView },
+    { path: "/vlc", name: "vlc", component: VlcView },
+    //{ path: '/course1', name: 'course1', component: CourseTest1 },
+    //{ path: '/course2', name: 'course2', component: CourseTest2 },
     { path: "/about", name: "about", component: AboutView },
     { path: "/login", name: "login", component: LoginView },
     { path: "/register", name: "register", component: RegistrationView },

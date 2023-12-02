@@ -14,10 +14,14 @@
           </li>
           <li>
             <div class="dropdown" @click.prevent>
-              <span>Témy</span>
+              <span>Kurzy</span>
               <div class="dropdown-content">
+                <!--
                 <router-link to="/course1">Test course 1</router-link>
                 <router-link to="/course2">Test course 2</router-link>
+                -->
+                <router-link to="/lifi" class="link">LI-FI</router-link>
+                <router-link to="/vlc" class="link">Viditeľná sveteľna komunikácia</router-link>
               </div>
             </div>
           </li>

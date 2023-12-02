@@ -28,11 +28,11 @@
       <FormKit
           type="select"
           name="course"
-          label="Téma"
-          help="Vyberte tému testu!"
+          label="Kurz"
+          help="Vyberte kurz testu!"
           :options="{
-          course1: 'Course 1',
-          course2: 'Course 2',
+          lifi: 'LI-FI',
+          vlc: 'VLC',
         }"
       />
     </base-card>
