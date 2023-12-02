@@ -2,7 +2,7 @@
   <section>
     <base-card>
       <h1>Vitajte v OLP </h1>
-      <h2>Vašej bráne k dokonalému online vzdelávaniu!</h2>
+      <h2>Nový spôsob online vzdelávania!</h2>
       <br>
       <br>
       <h4>Kto sme?</h4>
