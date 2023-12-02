@@ -54,6 +54,12 @@ export default {
         {
           src: 'https://pjzk94an.s5.cdn-upgates.com/q/q5f735661a079f-elektromagneticke-zareni-spektrum.jpg',
         },
+        {
+          src: 'https://thenetworkinstallers.com/wp-content/uploads/2022/06/network-works-1024x684.jpg'
+        },
+        {
+          src: 'https://zebracomp.s19.cdn-upgates.com/t/t61f9185c3bd2e-co-je-to-internet.jpg'
+        }
       ],
       colors: [
         "grey",
@@ -62,8 +68,8 @@ export default {
         "red lighten-1",
         "deep-purple accent-4",
       ],
-      slides: ["Li-Fi", "Viditeľná sveteľná komunikácia"],
-      routes: ["/lifi", "/vlc"],
+      slides: ["Li-Fi", "Viditeľná sveteľná komunikácia", "Wi-Fi", "Internet"],
+      routes: ["/lifi", "/vlc", "/wifi", "/internet"],
     };
   },
   methods: {

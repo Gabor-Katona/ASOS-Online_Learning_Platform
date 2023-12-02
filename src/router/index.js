@@ -6,8 +6,8 @@ import LoginView from "../pages/views/LoginView.vue";
 import NotFound from "../pages/NotFound.vue";
 import CreateTestView from "../pages/views/CreateTestView.vue";
 import AdminPanelView from "../pages/views/AdminPanelView.vue";
-//import CourseTest1 from "../pages/views/CourseTest1.vue";
-//import CourseTest2 from "../pages/views/CourseTest2.vue";
+import WifiView from "../pages/views/WifiView.vue";
+import InternetView from "../pages/views/InternetView.vue";
 import TestPage from "../pages/TestPage.vue";
 import TestForm from "../components/TestForm.vue";
 import StudentPanelView from "../pages/views/StudentPanelView.vue";
@@ -24,8 +24,8 @@ const router = createRouter({
     //{ path: '', name: '', component: }, //topics
     { path: "/lifi", name: "lifi", component: LifiView },
     { path: "/vlc", name: "vlc", component: VlcView },
-    //{ path: '/course1', name: 'course1', component: CourseTest1 },
-    //{ path: '/course2', name: 'course2', component: CourseTest2 },
+    { path: "/wifi", name: "wifi", component: WifiView},
+    { path: '/internet', name: 'internet', component: InternetView },
     { path: "/about", name: "about", component: AboutView },
     { path: "/login", name: "login", component: LoginView },
     { path: "/register", name: "register", component: RegistrationView },
