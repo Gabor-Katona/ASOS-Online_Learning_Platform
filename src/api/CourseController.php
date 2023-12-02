@@ -6,6 +6,7 @@ header ("Access-Control-Allow-Headers: *");
 
 require_once "Database.php";
 require_once "Course.php";
+require_once "ContentController.php";
 
 class CourseController {
 
@@ -35,6 +36,9 @@ class CourseController {
     }
 
     public function deleteCourse(int $id){
+        $contentController = new ContentController();
+        $contentController->deleteContentOfCourse($id);
+
         $queryArr = array(
             ':id' => $id,
         );

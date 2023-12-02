@@ -51,4 +51,12 @@ class ContentController {
         $stmt = $this->conn->prepare("DELETE FROM `content` WHERE id = :id;");
         return $stmt->execute($queryArr);
     }
+
+    public function deleteContentOfCourse(int $id){
+        $queryArr = array(
+            ':id' => $id,
+        );
+        $stmt = $this->conn->prepare("DELETE FROM `content` WHERE course_id = :id;");
+        return $stmt->execute($queryArr);
+    }
 }

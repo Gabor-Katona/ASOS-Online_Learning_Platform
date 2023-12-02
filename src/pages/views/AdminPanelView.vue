@@ -38,6 +38,24 @@
       </div>
     </base-card>
   </v-overlay>
+  <v-overlay
+      v-model="showCourseOverlay"
+      contained
+      class="align-center justify-center"
+  >
+    <base-card>
+      <h2>Vybratý návrh nového kurzu</h2>
+      <p>Návrh kurzu môžete editovať a následne uložiť stlačením tlačidla 'Uložiť zmeny'.</p>
+      <div class="modal-body">
+        <create-course-form
+            :content="content"
+            :edit="true"
+            @edit-course="saveEditedCourse"
+            @close="closeOverlay"
+        ></create-course-form>
+      </div>
+    </base-card>
+  </v-overlay>
   <section>
     <base-card>
       <br />
@@ -78,6 +96,18 @@
       </base-card>
       <base-button @click="moveUp">Späť na začiatok</base-button>
     </base-card>
+
+    <base-card>
+      <h2>Navrhnuté kurzy</h2>
+      <br/>
+      <courses-table
+          :courses="courses"
+          @delete-course="deleteCourse"
+          @show-course="showCourse"
+      ></courses-table>
+      <br/>
+      <base-button @click="moveUp">Späť na začiatok</base-button>
+    </base-card>
   </section>
 </template>
 
@@ -85,8 +115,10 @@
 import UsersTable from "../../components/UsersTable.vue";
 import TestsTable from "../../components/TestsTable.vue";
 import ResultsTable from "../../components/ResultsTable.vue";
+import CoursesTable from "@/components/CoursesTable";
 import RegistrationFormkit from "../../components/RegistrationFormkit.vue";
 import CreateTestForm from "../../components/CreateTestForm.vue";
+import CreateCourseForm from "@/components/CreateCourseForm";
 
 export default {
   components: {
@@ -95,19 +127,25 @@ export default {
     CreateTestForm,
     TestsTable,
     ResultsTable,
+    CoursesTable,
+    CreateCourseForm,
   },
   data() {
     return {
       users: [],
       tests: [],
+      courses:[{id: '2', username:'zoli', title: 'name'},],
       user: [],
       test: [],
+      content:[],
       results: [],
       testTableheads: ["Title", "Course", "Username", "Možnosti"],
       isLoading: false,
       error: null,
       editUserOverlay: false,
       editTestOverlay: false,
+      showCourseOverlay: false,
+      selectedCourseId: null,
     };
   },
   created() {
@@ -121,6 +159,8 @@ export default {
       testsPayload.append("action", "getAllTests");
       const resultsPayload = new FormData();
       resultsPayload.append("action", "get-testResults");
+      const coursesPayload = new FormData();
+      coursesPayload.append("action", "getAllCourses");
       try {
         await this.$store.dispatch("adminpanel/loadAllUsers", usersPayload);
         this.users = await this.$store.getters["adminpanel/getUsers"];
@@ -128,6 +168,8 @@ export default {
         this.tests = await this.$store.getters["test/getTests"];
         await this.$store.dispatch("test/testResults", resultsPayload);
         this.results = await this.$store.getters["test/getResults"];
+        await this.$store.dispatch("course/fetchCourses", coursesPayload);
+        this.courses = await this.$store.getters["course/getCourses"];
       } catch (error) {
         this.error = error;
       }
@@ -175,6 +217,18 @@ export default {
         this.error = err;
       }
     },
+    deleteCourse(id) {
+      console.log(id)
+      const payload = new FormData();
+      payload.append("id", id);
+      payload.append("action", "deleteCourse");
+      try {
+        this.$store.dispatch("course/deleteCourse", payload);
+        this.courses = this.$store.getters["course/getCourses"];
+      } catch (err) {
+        this.error = err;
+      }
+    },
     deleteTest(id) {
       const payload = new FormData();
       payload.append("id", id);
@@ -190,6 +244,21 @@ export default {
       window.scrollTo(0, 0);
       this.editUserOverlay = true;
       this.user = this.users.find((user) => user.id == id);
+    },
+    async showCourse(id) {
+      //console.log(id)
+      const coursePayload = new FormData();
+      coursePayload.append("id", id);
+      coursePayload.append("action", "getCompleteCourseById");
+      try {
+        await this.$store.dispatch("course/fetchCompleteCourse", coursePayload);
+        this.content = await this.$store.getters["course/getCourseContent"];
+      } catch (error) {
+        this.error = error;
+      }
+      this.selectedCourseId = id;
+      window.scrollTo(0, 0);
+      this.showCourseOverlay = true;
     },
     saveEditedUserData(data) {
       this.editUserOverlay = false;
@@ -224,6 +293,26 @@ export default {
         }, 600);
       }
     },
+    async saveEditedCourse(data) {
+      this.showCourseOverlay = false;
+      this.isLoading = true;
+      data.append("id", this.selectedCourseId)
+      try {
+        await this.$store.dispatch("course/createNewCourse", data);
+        //this.tests = await this.$store.getters["test/getTests"];
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 600);
+      } catch (err) {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.error = err;
+        }, 600);
+      }
+    },
+    closeOverlay(){
+      this.showCourseOverlay = false;
+    }
   },
 };
 </script>

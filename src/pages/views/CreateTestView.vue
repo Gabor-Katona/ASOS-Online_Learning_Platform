@@ -67,8 +67,8 @@
   </section>
   <section>
     <base-card v-if="openNewCourse">
-      <h2>Vytvorte nový kurz</h2>
-      <create-course-form @save-test="saveTest"></create-course-form>
+      <h2>Navrhnúť nový kurz</h2>
+      <create-course-form @save-course="saveCourse"></create-course-form>
     </base-card>
   </section>
   <section>
@@ -156,6 +156,25 @@ export default {
         setTimeout(() => {
           this.moveUp();
           this.openNewTest = false;
+          this.isLoading = false;
+        }, 600);
+      } catch (err) {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.error = err;
+        }, 600);
+      }
+    },
+    async saveCourse(data) {
+      //TODO: Create functionality
+      this.isLoading = true;
+      //data;
+      try {
+        await this.$store.dispatch("course/createNewCourse", data);
+        /*this.tests = await this.$store.getters["test/getTests"];*/
+        setTimeout(() => {
+          this.moveUp();
+          this.openNewCourse = false;
           this.isLoading = false;
         }, 600);
       } catch (err) {

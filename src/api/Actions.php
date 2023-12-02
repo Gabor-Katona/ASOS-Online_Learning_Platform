@@ -8,9 +8,12 @@ header("content-type: application/json");
 require_once "User.php";
 require_once "UserController.php";
 require_once "TestController.php";
+require_once "CourseController.php";
+require_once "ContentController.php";
 
 $userController = new UserController();
 $testController = new TestController();
+$courseController = new CourseController();
 
 if($_POST['action'] == 'login' || $_POST['action'] == 'autologin'){
     $person = null;
@@ -248,5 +251,108 @@ if($_POST['action'] == 'get-testResultsByUsername' ||
         }
     }
 
+}
+
+if($_POST['action'] == 'createCourse'){
+    /*$titleExists = null;
+
+    $titleExists = $testController->checkTestTitleExistsForCourse($_POST['title'], $_POST['course']);
+    if ($titleExists) {
+        echo json_encode('Title exists for this course');
+    } else {
+        try {
+            $testController->addNewTestOrEdit($_POST, 'create');
+            echo json_encode("Test was Successfully uploaded to Database!");
+        } catch (PDOException $exception) {
+            echo json_encode($exception->getMessage());
+        }
+    }*/
+
+    try {
+        $course = new Course();
+        $course->setTitle($_POST['title']);
+        $course->setUsername($_POST['username']);
+        $id = $courseController->createOrUpdateCourse($course);
+
+        $contentController = new ContentController();
+
+        for ($i = 1; $i <= 1000; $i++) {
+            if (isset($_POST["text" . $i])) {
+                $content = new Content();
+                $content->setCourseId($id);
+                $content->setText($_POST["text" . $i]);
+                $content->setType("text");
+                $contentController->createOrUpdateContent($content);
+            } elseif (isset($_POST["image" . $i])) {
+                $content = new Content();
+                $content->setCourseId($id);
+                $content->setText($_POST["image" . $i]);
+                $content->setType("image");
+                $contentController->createOrUpdateContent($content);
+            } else {
+                break;
+            }
+        }
+
+        echo json_encode("Course was Successfully uploaded to Database!");
+    } catch (PDOException $exception) {
+        echo json_encode($exception->getMessage());
+    }
+}
+
+if($_POST['action'] == 'getAllCourses'){
+    try{
+        echo json_encode($courseController->getAllCourses());
+    }catch(Error $exception){
+        echo json_encode($exception->getMessage());
+    }
+}
+
+if($_POST['action'] == 'getCompleteCourseById'){
+    $contentController = new ContentController();
+    try{
+        $dbData = $contentController->getAllContentOfCourse($_POST['id']);
+        echo json_encode($dbData);
+    }catch(PDOException $exception){
+        echo json_encode($exception->getMessage());
+    }
+}
+
+if($_POST['action'] == 'editCourse'){
+
+    try {
+        $contentController = new ContentController();
+        $contentController->deleteContentOfCourse($_POST["id"]);
+
+        for ($i = 1; $i <= 1000; $i++) {
+            if (isset($_POST["text" . $i])) {
+                $content = new Content();
+                $content->setCourseId($_POST["id"]);
+                $content->setText($_POST["text" . $i]);
+                $content->setType("text");
+                $contentController->createOrUpdateContent($content);
+            } elseif (isset($_POST["image" . $i])) {
+                $content = new Content();
+                $content->setCourseId($_POST["id"]);
+                $content->setText($_POST["image" . $i]);
+                $content->setType("image");
+                $contentController->createOrUpdateContent($content);
+            } else {
+                break;
+            }
+        }
+
+        echo json_encode("Course was Successfully uploaded to Database!");
+    } catch (PDOException $exception) {
+        echo json_encode($exception->getMessage());
+    }
+}
+
+if($_POST['action'] == 'deleteCourse'){
+    try{
+        $courseController->deleteCourse($_POST['id']);
+    }catch(Error $exception){
+        echo json_encode($exception->getMessage());
+    }
 }
 ?>
