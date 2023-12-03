@@ -31,6 +31,8 @@
           label="Kurz"
           help="Vyberte kurz testu!"
           :options="{
+          internet: 'Internet',
+          wifi: 'Wi-Fi',
           lifi: 'LI-FI',
           vlc: 'VLC',
         }"
